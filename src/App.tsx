@@ -33,7 +33,7 @@ const wordIndex:number = Math.floor(Math.random() * BISAYA_WORDS.length);
 const MAIN_WORD:string = BISAYA_WORDS[wordIndex];
 console.log(MAIN_WORD);
 
-const clue = MAIN_WORD[0].split('');
+const clue = MAIN_WORD[Math.floor(Math.random() * MAIN_WORD.length)].split('');
 
 function App() {
   
@@ -168,10 +168,11 @@ function App() {
           setIsWrong(true)
           setWrongMessage(`Sorry but you have not guessed the correct word. Try again next time.`);
           setDisplayMessageAnyway(`The word is: ${MAIN_WORD.toUpperCase()}`)
+          setPlayAgain(true);
           // makes the message go away
-          setTimeout(() => {
-            setIsWrong(false)
-          }, 4000)
+          // setTimeout(() => {
+          //   setIsWrong(false)
+          // }, 4000)
           //console.log('WRONG WORD')
           setFirstInput(true)
           setSecondInput(true)
@@ -231,10 +232,10 @@ function App() {
             <PlayAgain />
           }
           
-          <p className={`${isWrong ? 'opacity-100' : 'opacity-0'} text-red-500 font-semibold duration-150`}>
+          <p className={`${isWrong ? 'opacity-100' : 'opacity-0'} text-center text-red-500 font-semibold duration-150`}>
             {wrongMessage}
           </p>
-          <p className={`${isWrong ? 'opacity-100' : 'opacity-0'} text-black duration-150`}>
+          <p className={`${isWrong ? 'opacity-100' : 'opacity-0'} text-center text-black duration-150`}>
             <b>
               {displayMessageAnyway}
             </b>
