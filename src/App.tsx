@@ -231,7 +231,6 @@ function App() {
             &&
             <PlayAgain />
           }
-          
           <p className={`${isWrong ? 'opacity-100' : 'opacity-0'} text-center text-red-500 font-semibold duration-150`}>
             {wrongMessage}
           </p>
