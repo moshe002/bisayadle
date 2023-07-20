@@ -39,15 +39,15 @@ const FirstRowInput: React.FC<FirstRowProps> = ({
         {
           inputs.map(i => {
             const isCorrect = MAIN_WORD_ARR[i] === firstWordInput[i];
-            const inputClassName = `${firstInput ? 'opacity-40' : ''} 
-            text-2xl text-center w-10 border-2 
-            ${firstInput ? 'border-gray-300' : 'border-gray-400'} 
-            duration-150 rounded-md focus:border-green-400 outline-none capitalize 
-            ${isCorrect ? 'bg-green-400' : ''}`;
+            //const inputClassName = ;
             
             return (
               <input 
-                className={inputClassName}
+                className={`${firstInput ? 'opacity-40' : ''} 
+                text-2xl text-center w-10 border-2 
+                ${firstInput ? 'border-gray-300' : 'border-gray-400'} 
+                duration-150 rounded-md focus:border-green-400 outline-none capitalize 
+                ${isCorrect ? 'bg-green-400' : ''}`}
                 type="text" 
                 key={i}
                 name={i.toString()} 

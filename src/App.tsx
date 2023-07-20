@@ -69,6 +69,31 @@ function App() {
   // play again
   const [playAgain, setPlayAgain] = useState<boolean>(false);
 
+  const checkWord = (inputWord:string, MAIN_WORD:string) => {
+    // checks input after submit
+    const input:string[] = inputWord.split(""); 
+    let arrMainWord:string[] = MAIN_WORD.split("");
+    // console.log(`What i inputted: ${input}`)
+    // console.log(`The main word: ${arrMainWord}`);
+    for(let x = 0; x < input.length; x++){
+      if(arrMainWord.includes(input[x])){
+        // check if input letter is equal to mainWord letter and check if input letter and mainWord letter has the same location
+        if(input[x] != arrMainWord[x]){
+          // console.log(`letter ${input[x]} exists but not in the same place`)
+          // letter exists but not in the same place
+          // bg color should be yellowish (amber-600 or amber-500)
+        } else if(input[x] == arrMainWord[x]) {
+          // console.log(`letter ${input[x]} exists and same location`)
+          // letter exists and in the same place
+          // bg color should be green (green-400)
+        }
+      } else {
+        // console.log(`letter ${input[x]} does not exist in mainWord`)
+        // default color
+      }
+    }
+  }
+
   const handleSubmit = () => {
       let firstWord:string = firstWordInput.join('');
       let secondWord:string = secondWordInput.join('');
@@ -77,6 +102,7 @@ function App() {
       let fifthWord:string = fifthWordInput.join('');
       
       if(firstWordInput.length > 0 && secondWordInput.length == 0) {
+        checkWord(firstWord, MAIN_WORD);
         if(firstWord === MAIN_WORD) {
           setIsCorrect(true);
           //console.log('CONGRATS YOU WIN')
