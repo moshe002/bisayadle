@@ -1,17 +1,4 @@
-/*
-
-  how wordle works:
-  - 5 tries
-  - can input 5 letters 
-  - if letter is present in main word then letter bg color
-  will be green, if letter is present but in the wrong
-  place, letter bg color will be yellow
-  - if all letter == main word bg color will be green,
-  meaning success
-
-*/
-
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 
 import FirstRowInput from "./components/FirstRowInput";
 import SecondRowInput from "./components/SecondRowInput";
@@ -25,6 +12,10 @@ import HowToPlay from "./components/HowToPlay";
 import PlayAgain from "./components/PlayAgain";
 
 import bisayaWords from "./bisayaWords.json";
+
+import WIN from './assets/audio/daug.mp3';
+import WRONG from './assets/audio/getWrong.mp3';
+import LOSE from './assets/audio/pildi.mp3';
 
 // gets one word from the JSON file which will be our word
 const BISAYA_WORDS:string[] = bisayaWords;
@@ -76,7 +67,46 @@ function App() {
   const [fourthBgColors, setFourthBgColors] = useState<string[]>(Array(inputs.length).fill(""));
   const [fifthBgColors, setFifthBgColors] = useState<string[]>(Array(inputs.length).fill(""));
 
+  // play audio on win or lose
+  const [win, setWin] = useState<boolean>(false);
+  const [lose, setLose] = useState<boolean>(false);
 
+  const audioRef = useRef<HTMLAudioElement | null>(null); // wrong answer
+  const winRef = useRef<HTMLAudioElement | null>(null); // correct answer
+  const lostRef = useRef<HTMLAudioElement | null>(null); // you lost
+
+  useEffect(() => {
+    const audioElement = audioRef.current;
+    if (audioElement) {
+      if (isWrong) {
+        audioElement.play();
+      } else {
+        audioElement.pause();
+      }
+    }
+  }, [isWrong]);
+
+  useEffect(() => {
+    const audioElement = winRef.current;
+    if (audioElement) {
+      if (win) {
+        audioElement.play();
+      } else {
+        audioElement.pause();
+      }
+    }
+  }, [win]);
+
+  useEffect(() => {
+    const audioElement = lostRef.current;
+    if (audioElement) {
+      if (lose) {
+        audioElement.play();
+      } else {
+        audioElement.pause();
+      }
+    }
+  }, [lose]);
 
   const checkWord = (inputWord:string, setState: React.Dispatch<React.SetStateAction<string[]>>) => {
     const input:string[] = inputWord.split(""); 
@@ -107,6 +137,7 @@ function App() {
         checkWord(firstWord, setFirstBgColors);
         if(firstWord === MAIN_WORD) {
           setIsCorrect(true);
+          setWin(true);
           //console.log('CONGRATS YOU WIN')
           setPlayAgain(true);
           console.log(firstWord)
@@ -127,6 +158,7 @@ function App() {
         checkWord(secondWord, setSecondBgColors);
         if(secondWord === MAIN_WORD) {
           setIsCorrect(true);
+          setWin(true);
           setPlayAgain(true);
           //console.log('CONGRATS YOU WIN')
           console.log(secondWord)
@@ -148,6 +180,7 @@ function App() {
         checkWord(thirdWord, setThirdBgColors);
         if(thirdWord === MAIN_WORD) {
           setIsCorrect(true);
+          setWin(true);
           setPlayAgain(true);
           //console.log('CONGRATS YOU WIN')
           console.log(thirdWord)
@@ -170,6 +203,7 @@ function App() {
         checkWord(fourthWord, setFourthBgColors);
         if(fourthWord === MAIN_WORD) {
           setIsCorrect(true);
+          setWin(true);
           setPlayAgain(true);
           //console.log('CONGRATS YOU WIN')
           console.log(fourthWord)
@@ -193,11 +227,15 @@ function App() {
         checkWord(fifthWord, setFifthBgColors);
         if(fifthWord === MAIN_WORD) {
           setIsCorrect(true);
+          setWin(true);
           setPlayAgain(true);
           //console.log('CONGRATS YOU WIN')
           console.log(fifthWord)
         } else {
           setIsWrong(true)
+          setTimeout(() => {
+            setLose(true);
+          }, 1000)
           setWrongMessage(`Sensya pero wala ka naka tag-an. Suwaya lang sunod.`);
           setDisplayMessageAnyway(`Ang word kay: ${MAIN_WORD.toUpperCase()}`)
           setPlayAgain(true);
@@ -259,6 +297,27 @@ function App() {
             playAgain
             &&
             <PlayAgain />
+          }
+          {
+            isWrong
+            &&
+            <audio ref={audioRef}>
+              <source src={WRONG} type="audio/mpeg" />
+            </audio>
+          }
+          {
+            win
+            &&
+            <audio ref={winRef}>
+              <source src={WIN} type="audio/mpeg" />
+            </audio>
+          }
+          {
+            lose
+            &&
+            <audio ref={lostRef}>
+              <source src={LOSE} type="audio/mpeg" />
+            </audio>
           }
           <p className={`${isWrong ? 'opacity-100' : 'opacity-0'} text-center text-2xl text-red-500 font-semibold duration-150`}>
             {wrongMessage}
