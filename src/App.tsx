@@ -97,11 +97,11 @@ function App() {
   }
 
   const handleSubmit = () => {
-      let firstWord:string = firstWordInput.join('');
-      let secondWord:string = secondWordInput.join('');
-      let thirdWord:string = thirdWordInput.join('');
-      let fourthWord:string = fourthWordInput.join('');
-      let fifthWord:string = fifthWordInput.join('');
+      let firstWord:string = firstWordInput.join('').toLowerCase();
+      let secondWord:string = secondWordInput.join('').toLowerCase();
+      let thirdWord:string = thirdWordInput.join('').toLowerCase();
+      let fourthWord:string = fourthWordInput.join('').toLowerCase();
+      let fifthWord:string = fifthWordInput.join('').toLowerCase();
       
       if(firstWordInput.length > 0 && secondWordInput.length == 0) {
         checkWord(firstWord, setFirstBgColors);
@@ -278,7 +278,7 @@ function App() {
             onClick={() => setHowToPlay(true)}
             type="button"
             title="E-click ko para unsaon pagduwa" 
-            className="text-sm hover:text-green-400 duration-100 underline">
+            className="text-sm text-blue-500 underline mb-2">
               Unsaon pagduwa
           </button>
           <Creator />

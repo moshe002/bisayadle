@@ -32,7 +32,7 @@ const FirstRowInput: React.FC<FirstRowProps> = ({
   };
 
   return (
-    <form className="flex flex-col items-center">
+    <div className="flex flex-col items-center">
       <div className="flex gap-2">
         {
           inputs.map(i => {
@@ -63,7 +63,7 @@ const FirstRowInput: React.FC<FirstRowProps> = ({
         }
       </div>
       <p className="text-red-500">{emptyMessage}</p>
-    </form>
+    </div>
   )
 }
 

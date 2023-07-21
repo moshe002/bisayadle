@@ -32,7 +32,7 @@ const FifthRowInput:React.FC<FifthRowProps> = ({
   };
   
   return (
-    <form className="flex flex-col items-center">
+    <div className="flex flex-col items-center">
       <div className="flex gap-2">
         {
           inputs.map(i => {
@@ -64,7 +64,7 @@ const FifthRowInput:React.FC<FifthRowProps> = ({
         }
       </div>
       <p className="text-red-500">{emptyMessage}</p> 
-    </form>
+    </div>
   )
 }
 
