@@ -5,7 +5,7 @@ interface FirstRowProps {
   firstWordInput: string[];
   setFirstWordInput: React.Dispatch<React.SetStateAction<string[]>>;
   firstInput: boolean;
-  bgColor: string;
+  firstBgColors: string[];
 }
 
 const FirstRowInput: React.FC<FirstRowProps> = ({ 
@@ -13,7 +13,7 @@ const FirstRowInput: React.FC<FirstRowProps> = ({
     firstWordInput, 
     setFirstWordInput, 
     firstInput,
-    bgColor
+    firstBgColors
   }) => {
  
   const [emptyMessage, setEmptyMessage] = useState<string>('');
@@ -33,18 +33,16 @@ const FirstRowInput: React.FC<FirstRowProps> = ({
 
   return (
     <form className="flex flex-col items-center">
-      <div className="flex gap-3">
+      <div className="flex gap-2">
         {
           inputs.map(i => {
-            //const isCorrect = MAIN_WORD_ARR[i] === firstWordInput[i];
-            //const inputClassName = ;
+
             return (
               <input 
                 className={`${firstInput ? 'opacity-40' : ''} 
-                text-2xl text-center w-10 border-2 ${bgColor}
+                text-2xl text-center w-10 border-2 ${firstBgColors[i]}
                 ${firstInput ? 'border-gray-300' : 'border-gray-400'} 
                 duration-150 rounded-md focus:border-green-400 outline-none capitalize`}
-                //${//isCorrect ? 'bg-green-400' : ''}
                 type="text" 
                 key={i}
                 name={i.toString()} 

@@ -64,35 +64,36 @@ function App() {
   const [fifthInput, setFifthInput] = useState<boolean>(true);
 
   // display how to play
-  const [howToPlay, setHowToPlay] = useState<boolean>(false); // change to true later
+  const [howToPlay, setHowToPlay] = useState<boolean>(true); // change to true later
 
   // play again
   const [playAgain, setPlayAgain] = useState<boolean>(false);
 
   // set color
-  const [bgColor, setBgColor] = useState<string>('');
+  const [firstBgColors, setFirstBgColors] = useState<string[]>(Array(inputs.length).fill(""));
+  const [secondBgColors, setSecondBgColors] = useState<string[]>(Array(inputs.length).fill(""));
+  const [thirdBgColors, setThirdBgColors] = useState<string[]>(Array(inputs.length).fill(""));
+  const [fourthBgColors, setFourthBgColors] = useState<string[]>(Array(inputs.length).fill(""));
+  const [fifthBgColors, setFifthBgColors] = useState<string[]>(Array(inputs.length).fill(""));
 
-  const checkWord = (inputWord:string, MAIN_WORD:string) => {
-    // checks input after submit
+
+
+  const checkWord = (inputWord:string, setState: React.Dispatch<React.SetStateAction<string[]>>) => {
     const input:string[] = inputWord.split(""); 
     let arrMainWord:string[] = MAIN_WORD.split("");
-    // console.log(`What i inputted: ${input}`)
-    // console.log(`The main word: ${arrMainWord}`);
-    for(let x = 0; x < input.length; x++){
-      if(arrMainWord.includes(input[x])){
-        // check if input letter is equal to mainWord letter and check if input letter and mainWord letter has the same location
-        if(input[x] != arrMainWord[x]) {
-          return setBgColor('bg-amber-500');
+
+    const updatedBgColors:string[] = input.map((letter, index) => {
+      if (arrMainWord.includes(letter)) {
+        if (letter !== arrMainWord[index]) {
+          return "bg-amber-500"; // letter exists but not in the same location
         } else {
-          return setBgColor('bg-green-400');
+          return "bg-green-400"; // letter exists and in the same location
         }
-        //console.log(`letter ${input[x]} exists but not in the same place`)
-        //console.log(`letter ${input[x]} exists and same location`)
       } else {
-        //console.log(`letter ${input[x]} does not exist in mainWord`)
-        return setBgColor('bg-gray-400') // default color
+        return "bg-gray-400"; // letter does not exist in the main word (default color)
       }
-    }
+    });
+    setState(updatedBgColors);
   }
 
   const handleSubmit = () => {
@@ -103,7 +104,7 @@ function App() {
       let fifthWord:string = fifthWordInput.join('');
       
       if(firstWordInput.length > 0 && secondWordInput.length == 0) {
-        checkWord(firstWord, MAIN_WORD);
+        checkWord(firstWord, setFirstBgColors);
         if(firstWord === MAIN_WORD) {
           setIsCorrect(true);
           //console.log('CONGRATS YOU WIN')
@@ -123,6 +124,7 @@ function App() {
         }
       } // end of firstWordInput
       if(secondWordInput.length > 0 && thirdWordInput.length == 0) {
+        checkWord(secondWord, setSecondBgColors);
         if(secondWord === MAIN_WORD) {
           setIsCorrect(true);
           setPlayAgain(true);
@@ -143,6 +145,7 @@ function App() {
         }
       } // end of secondWordInput
       if(thirdWordInput.length > 0 && fourthWordInput.length == 0) {
+        checkWord(thirdWord, setThirdBgColors);
         if(thirdWord === MAIN_WORD) {
           setIsCorrect(true);
           setPlayAgain(true);
@@ -164,6 +167,7 @@ function App() {
         }
       } // end of thirdWordInput
       if(fourthWordInput.length > 0 && fifthWordInput.length == 0) {
+        checkWord(fourthWord, setFourthBgColors);
         if(fourthWord === MAIN_WORD) {
           setIsCorrect(true);
           setPlayAgain(true);
@@ -186,6 +190,7 @@ function App() {
         }
       } // end of fourthWordInput
       if(fifthWordInput.length > 0 && fourthWordInput.length > 0) {
+        checkWord(fifthWord, setFifthBgColors);
         if(fifthWord === MAIN_WORD) {
           setIsCorrect(true);
           setPlayAgain(true);
@@ -196,11 +201,6 @@ function App() {
           setWrongMessage(`Sensya pero wala ka naka tag-an. Suwaya lang sunod.`);
           setDisplayMessageAnyway(`Ang word kay: ${MAIN_WORD.toUpperCase()}`)
           setPlayAgain(true);
-          // makes the message go away
-          // setTimeout(() => {
-          //   setIsWrong(false)
-          // }, 4000)
-          //console.log('WRONG WORD')
           setFirstInput(true)
           setSecondInput(true)
           setThirdInput(true)
@@ -216,41 +216,43 @@ function App() {
       <div className="flex flex-col items-center gap-5 p-3">
         <h1 className="text-4xl font-bold">BISAYADLE</h1>
         <p className="text-blue-500 text-lg">Clue: naay letter <b className="text-black capitalize">{`${clue}`}</b> sa word</p>
-          <section>
+          <section className="flex flex-col gap-2">
+
             <FirstRowInput 
               inputs={inputs} 
               firstWordInput={firstWordInput} 
               setFirstWordInput={setFirstWordInput} 
               firstInput={firstInput} 
-              bgColor={bgColor} />
-              <br />
+              firstBgColors={firstBgColors} />
+
             <SecondRowInput 
               inputs={inputs} 
               secondWordInput={secondWordInput} 
               setSecondWordInput={setSecondWordInput} 
               secondInput={secondInput}
-              MAIN_WORD={MAIN_WORD} />
-              <br />
+              secondBgColors={secondBgColors} />
+              
             <ThirdRowInput 
               inputs={inputs} 
               thirdWordInput={thirdWordInput} 
               setThirdWordInput={setThirdWordInput}
               thirdInput={thirdInput}
-              MAIN_WORD={MAIN_WORD} />
-              <br />
+              thirdBgColors={thirdBgColors} />
+
             <FourthRowInput 
               inputs={inputs} 
               fourthWordInput={fourthWordInput} 
               setFourthWordInput={setFourthWordInput} 
               fourthInput={fourthInput}
-              MAIN_WORD={MAIN_WORD} />
-              <br />
+              fourthBgColors={fourthBgColors} />
+
             <FifthRowInput 
               inputs={inputs} 
               fifthWordInput={fifthWordInput} 
               setFifthWordInput={setFifthWordInput} 
               fifthInput={fifthInput}
-              MAIN_WORD={MAIN_WORD} />
+              fifthBgColors={fifthBgColors} />
+
           </section>
           <CheckButton handleSubmit={handleSubmit} />
           {
@@ -258,7 +260,7 @@ function App() {
             &&
             <PlayAgain />
           }
-          <p className={`${isWrong ? 'opacity-100' : 'opacity-0'} text-center text-red-500 font-semibold duration-150`}>
+          <p className={`${isWrong ? 'opacity-100' : 'opacity-0'} text-center text-2xl text-red-500 font-semibold duration-150`}>
             {wrongMessage}
           </p>
           <p className={`${isWrong ? 'opacity-100' : 'opacity-0'} text-center text-black duration-150`}>

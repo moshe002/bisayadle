@@ -2,10 +2,10 @@ import React, { useEffect, useState } from "react";
 
 interface SecondRowProps {
   inputs: number[];
-  secondWordInput:string[];
-  setSecondWordInput:React.Dispatch<React.SetStateAction<string[]>>;
-  secondInput:boolean;
-  MAIN_WORD: string;
+  secondWordInput: string[];
+  setSecondWordInput: React.Dispatch<React.SetStateAction<string[]>>;
+  secondInput: boolean;
+  secondBgColors: string[];
 }
 
 const SecondRowInput:React.FC<SecondRowProps> = ({ 
@@ -13,7 +13,7 @@ const SecondRowInput:React.FC<SecondRowProps> = ({
     secondWordInput, 
     setSecondWordInput, 
     secondInput,
-    MAIN_WORD
+    secondBgColors
   }) => {
   
   const [emptyMessage, setEmptyMessage] = useState<string>('');
@@ -31,23 +31,17 @@ const SecondRowInput:React.FC<SecondRowProps> = ({
     }
   };
 
-  const MAIN_WORD_ARR = MAIN_WORD.split("");
-
   return (
     <form className="flex flex-col items-center">
-      <div className="flex gap-3">
+      <div className="flex gap-2">
         {
           inputs.map(i => {
-            const isCorrect = MAIN_WORD_ARR[i] === secondWordInput[i];
-            const inputClassName = `${secondInput ? 'opacity-40' : ''} 
-            text-2xl text-center w-10 border-2 
-            ${secondInput ? 'border-gray-300' : 'border-gray-400'} 
-            duration-150 rounded-md focus:border-green-400 outline-none capitalize 
-            ${isCorrect ? 'bg-green-400' : ''}`;
-
             return (
               <input 
-                className={inputClassName}
+              className={`${secondInput ? 'opacity-40' : ''} 
+              text-2xl text-center w-10 border-2 ${secondBgColors[i]}
+              ${secondInput ? 'border-gray-300' : 'border-gray-400'} 
+              duration-150 rounded-md focus:border-green-400 outline-none capitalize`}
                 type="text" 
                 key={i}
                 name={i.toString()} 
