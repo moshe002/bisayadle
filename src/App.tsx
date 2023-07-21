@@ -270,7 +270,16 @@ function App() {
             &&
             <WinnerModal setIsCorrect={setIsCorrect} />  
           }
-        <Creator />
+        <div className="flex flex-col items-center">
+          <button 
+            onClick={() => setHowToPlay(true)}
+            type="button"
+            title="Click me to know how to play" 
+            className="text-sm hover:text-green-400 duration-100 underline">
+              How to Play
+          </button>
+          <Creator />
+        </div>
       </div> 
       {
         howToPlay

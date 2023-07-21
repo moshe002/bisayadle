@@ -14,7 +14,7 @@ const HowToPlay: React.FC<HowToPlaceProps> = ({
   return (
     <div className="fixed inset-0 flex items-center justify-center z-50 bg-gray-400 bg-opacity-20 backdrop-filter backdrop-blur-sm">
       <div className="flex flex-col items-center rounded-lg p-7 opacity-100 text-center bg-white shadow-2xl">
-          <h1 className='text-green-500 font-semibold text-2xl underline'>How to play Bisayadle:</h1>
+          <h1 className='text-green-500 font-bold text-3xl underline'>HOW TO PLAY:</h1>
           <img className='w-80' src={Example1} alt="example1" />
           <p>The green colored letter/s means the letter/s are on the correct place/s.</p>
           <img className='w-80' src={Example2} alt="example2" />
