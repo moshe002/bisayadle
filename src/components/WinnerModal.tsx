@@ -20,7 +20,7 @@ const WinnerModal: React.FC<WinnerModalProps> = ({
               setIsCorrect(false);
             }}
             >
-              CLOSE
+              SIRADO
           </button>
       </div>
     </div>

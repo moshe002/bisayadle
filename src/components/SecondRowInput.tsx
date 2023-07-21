@@ -25,7 +25,7 @@ const SecondRowInput:React.FC<SecondRowProps> = ({
   const checkEmptyFields = () => {
     const isEmpty = secondWordInput.some(word => word === " " || word === undefined);
     if (isEmpty) {
-      setEmptyMessage('Will not accept empty field/s!');
+      setEmptyMessage('Dili pwede walay sulod!');
     } else {
       setEmptyMessage('');
     }
@@ -52,7 +52,7 @@ const SecondRowInput:React.FC<SecondRowProps> = ({
                 key={i}
                 name={i.toString()} 
                 id={i.toString()}
-                title="letter here" 
+                title="letra diri" 
                 maxLength={1}
                 onChange={
                   (e) => {

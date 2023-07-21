@@ -64,10 +64,13 @@ function App() {
   const [fifthInput, setFifthInput] = useState<boolean>(true);
 
   // display how to play
-  const [howToPlay, setHowToPlay] = useState<boolean>(true);
+  const [howToPlay, setHowToPlay] = useState<boolean>(false); // change to true later
 
   // play again
   const [playAgain, setPlayAgain] = useState<boolean>(false);
+
+  // set color
+  const [bgColor, setBgColor] = useState<string>('');
 
   const checkWord = (inputWord:string, MAIN_WORD:string) => {
     // checks input after submit
@@ -78,18 +81,16 @@ function App() {
     for(let x = 0; x < input.length; x++){
       if(arrMainWord.includes(input[x])){
         // check if input letter is equal to mainWord letter and check if input letter and mainWord letter has the same location
-        if(input[x] != arrMainWord[x]){
-          // console.log(`letter ${input[x]} exists but not in the same place`)
-          // letter exists but not in the same place
-          // bg color should be yellowish (amber-600 or amber-500)
-        } else if(input[x] == arrMainWord[x]) {
-          // console.log(`letter ${input[x]} exists and same location`)
-          // letter exists and in the same place
-          // bg color should be green (green-400)
+        if(input[x] != arrMainWord[x]) {
+          return setBgColor('bg-amber-500');
+        } else {
+          return setBgColor('bg-green-400');
         }
+        //console.log(`letter ${input[x]} exists but not in the same place`)
+        //console.log(`letter ${input[x]} exists and same location`)
       } else {
-        // console.log(`letter ${input[x]} does not exist in mainWord`)
-        // default color
+        //console.log(`letter ${input[x]} does not exist in mainWord`)
+        return setBgColor('bg-gray-400') // default color
       }
     }
   }
@@ -110,7 +111,7 @@ function App() {
           console.log(firstWord)
         } else {
           setIsWrong(true)
-          setWrongMessage('WRONG WORD');
+          setWrongMessage('SAYOP');
           // makes the message go away
           setTimeout(() => {
             setIsWrong(false)
@@ -129,7 +130,7 @@ function App() {
           console.log(secondWord)
         } else {
           setIsWrong(true)
-          setWrongMessage('WRONG WORD');
+          setWrongMessage('SAYOP');
           // makes the message go away
           setTimeout(() => {
             setIsWrong(false)
@@ -149,7 +150,7 @@ function App() {
           console.log(thirdWord)
         } else {
           setIsWrong(true)
-          setWrongMessage('WRONG WORD');
+          setWrongMessage('SAYOP');
           // makes the message go away
           setTimeout(() => {
             setIsWrong(false)
@@ -170,7 +171,7 @@ function App() {
           console.log(fourthWord)
         } else {
           setIsWrong(true)
-          setWrongMessage('WRONG WORD');
+          setWrongMessage('SAYOP');
           // makes the message go away
           setTimeout(() => {
             setIsWrong(false)
@@ -192,8 +193,8 @@ function App() {
           console.log(fifthWord)
         } else {
           setIsWrong(true)
-          setWrongMessage(`Sorry but you have not guessed the correct word. Try again next time.`);
-          setDisplayMessageAnyway(`The word is: ${MAIN_WORD.toUpperCase()}`)
+          setWrongMessage(`Sensya pero wala ka naka tag-an. Suwaya lang sunod.`);
+          setDisplayMessageAnyway(`Ang word kay: ${MAIN_WORD.toUpperCase()}`)
           setPlayAgain(true);
           // makes the message go away
           // setTimeout(() => {
@@ -220,8 +221,8 @@ function App() {
               inputs={inputs} 
               firstWordInput={firstWordInput} 
               setFirstWordInput={setFirstWordInput} 
-              firstInput={firstInput}
-              MAIN_WORD={MAIN_WORD} />
+              firstInput={firstInput} 
+              bgColor={bgColor} />
               <br />
             <SecondRowInput 
               inputs={inputs} 
@@ -274,9 +275,9 @@ function App() {
           <button 
             onClick={() => setHowToPlay(true)}
             type="button"
-            title="Click me to know how to play" 
+            title="E-click ko para unsaon pagduwa" 
             className="text-sm hover:text-green-400 duration-100 underline">
-              How to Play
+              Unsaon pagduwa
           </button>
           <Creator />
         </div>

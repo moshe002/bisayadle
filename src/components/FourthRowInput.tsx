@@ -25,7 +25,7 @@ const FourthRowInput:React.FC<FourthRowProps> = ({
     const checkEmptyFields = () => {
       const isEmpty = fourthWordInput.some(word => word === " " || word === undefined);
       if (isEmpty) {
-        setEmptyMessage('Will not accept empty field/s!');
+        setEmptyMessage('Dili pwede walay sulod!');
       } else {
         setEmptyMessage('');
       }
@@ -52,7 +52,7 @@ const FourthRowInput:React.FC<FourthRowProps> = ({
                 key={i}
                 name={i.toString()} 
                 id={i.toString()}
-                title="letter here" 
+                title="letra diri" 
                 maxLength={1}
                 onChange={
                   (e) => {
