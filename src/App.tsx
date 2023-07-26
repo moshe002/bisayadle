@@ -22,7 +22,7 @@ const BISAYA_WORDS:string[] = bisayaWords;
 const wordIndex:number = Math.floor(Math.random() * BISAYA_WORDS.length); 
 
 const MAIN_WORD:string = BISAYA_WORDS[wordIndex];
-console.log(MAIN_WORD);
+//console.log(MAIN_WORD);
 
 const clue = MAIN_WORD[Math.floor(Math.random() * MAIN_WORD.length)].split('');
 
@@ -140,7 +140,7 @@ function App() {
           setWin(true);
           //console.log('CONGRATS YOU WIN')
           setPlayAgain(true);
-          console.log(firstWord)
+          //console.log(firstWord)
         } else {
           setIsWrong(true)
           setWrongMessage('SAYOP');
@@ -151,7 +151,7 @@ function App() {
           //console.log('WRONG WORD')
           setFirstInput(true)
           setSecondInput(false)
-          console.log(firstWord)
+          //console.log(firstWord)
         }
       } // end of firstWordInput
       if(secondWordInput.length > 0 && thirdWordInput.length == 0) {
@@ -161,7 +161,7 @@ function App() {
           setWin(true);
           setPlayAgain(true);
           //console.log('CONGRATS YOU WIN')
-          console.log(secondWord)
+          //console.log(secondWord)
         } else {
           setIsWrong(true)
           setWrongMessage('SAYOP');
@@ -173,7 +173,7 @@ function App() {
           setFirstInput(true)
           setSecondInput(true)
           setThirdInput(false)
-          console.log(secondWord)
+          //console.log(secondWord)
         }
       } // end of secondWordInput
       if(thirdWordInput.length > 0 && fourthWordInput.length == 0) {
@@ -183,7 +183,7 @@ function App() {
           setWin(true);
           setPlayAgain(true);
           //console.log('CONGRATS YOU WIN')
-          console.log(thirdWord)
+          //console.log(thirdWord)
         } else {
           setIsWrong(true)
           setWrongMessage('SAYOP');
@@ -196,7 +196,7 @@ function App() {
           setSecondInput(true)
           setThirdInput(true)
           setFourthInput(false)
-          console.log(thirdWord)
+          //console.log(thirdWord)
         }
       } // end of thirdWordInput
       if(fourthWordInput.length > 0 && fifthWordInput.length == 0) {
@@ -206,7 +206,7 @@ function App() {
           setWin(true);
           setPlayAgain(true);
           //console.log('CONGRATS YOU WIN')
-          console.log(fourthWord)
+          //console.log(fourthWord)
         } else {
           setIsWrong(true)
           setWrongMessage('SAYOP');
@@ -220,7 +220,7 @@ function App() {
           setThirdInput(true)
           setFourthInput(true)
           setFifthInput(false)
-          console.log(fourthWord)
+          //console.log(fourthWord)
         }
       } // end of fourthWordInput
       if(fifthWordInput.length > 0 && fourthWordInput.length > 0) {
@@ -230,7 +230,7 @@ function App() {
           setWin(true);
           setPlayAgain(true);
           //console.log('CONGRATS YOU WIN')
-          console.log(fifthWord)
+          //console.log(fifthWord)
         } else {
           setIsWrong(true)
           setTimeout(() => {
@@ -244,7 +244,7 @@ function App() {
           setThirdInput(true)
           setFourthInput(true)
           setFifthInput(false)
-          console.log(fifthWord)
+          //console.log(fifthWord)
         }
       } // end of fifthWordInput
   };  
@@ -296,7 +296,7 @@ function App() {
           {
             playAgain
             &&
-            <PlayAgain />
+            <PlayAgain /> // setHowToPlay={setHowToPlay} para ma close ang howToPlay everytime mo duwa sila balik 
           }
           {
             isWrong

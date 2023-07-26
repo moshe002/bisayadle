@@ -31,6 +31,15 @@ const FourthRowInput:React.FC<FourthRowProps> = ({
       }
     };
 
+    const handleNext = (event: any) => { // (NEVER USE ANY AS ITS TYPE) as of now it is any because it throws errors, too lazy to fix it :(
+      if (event.target.value.length === event.target.maxLength) {
+        const nextInput = event.target.nextElementSibling;
+        if (nextInput) {
+          nextInput.focus();
+        }
+      }
+    };
+
   return (
     <div className="flex flex-col items-center">
       <div className="flex gap-2">
@@ -56,6 +65,7 @@ const FourthRowInput:React.FC<FourthRowProps> = ({
                     setFourthWordInput(updatedWord);
                   }    
                 }
+                onKeyUp={handleNext}
                 required 
                 disabled={fourthInput} 
                 />
