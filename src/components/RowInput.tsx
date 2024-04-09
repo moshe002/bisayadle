@@ -55,9 +55,7 @@ function RowInput({
   }, [nextIndex])
 
   const handleSubmit = () => {
-    console.log(mainWord);
     const wordToCheck = inputtedWord.join(''); 
-    console.log(wordToCheck);
     if(wordToCheck === mainWord){
       setWinOrLose({ win: true, lose: false, wrong: false });
     } else {
