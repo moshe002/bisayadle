@@ -41,8 +41,8 @@ const FirstRowInput: React.FC<FirstRowProps> = ({
   };
 
   return (
-    <div className="flex flex-col items-center">
-      <div className="flex gap-2">
+    <div className="flex flex-col items-center border-2 border-blue-300">
+      <div className="flex gap-2 border-2 border-red-300">
         {
           inputs.map(i => {
 
