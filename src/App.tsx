@@ -1,4 +1,4 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import RowInput from "./components/RowInput";
 import Creator from "./components/Creator";
 import HowToPlay from "./components/HowToPlay";
@@ -25,7 +25,7 @@ function App() {
   ];
 
   // display how to play
-  const [howToPlay, setHowToPlay] = useState<boolean>(true); // set to true 
+  const [howToPlay, setHowToPlay] = useState<boolean>(false); 
   // play audio on win or lose
   const [winOrLose, setWinOrLose] = useState<{ win: boolean, lose: boolean, wrong: boolean }>({ 
     win: false, 
@@ -37,42 +37,52 @@ function App() {
   const winRef = useRef<HTMLAudioElement | null>(null);
   const loseRef = useRef<HTMLAudioElement | null>(null);
 
+  useEffect(() => {
+    let hasSeenHowToPlayModal = localStorage.getItem('hasSeenHowToPlay');
+    
+    if (!hasSeenHowToPlayModal) {
+      setHowToPlay(true);
+    }
+  }, []);
+
   return (
-    <div className="flex flex-col justify-center items-center w-full h-full">
-      <div className="flex flex-col items-center gap-5 p-3">
-        <h1 className="text-4xl font-bold">BISAYADLE</h1>
-        <p className="text-blue-500 text-lg">Clue: naay letter <b className="text-black capitalize">{`${clue}`}</b> sa word</p>
-          <RowInput 
-            mainWord={MAIN_WORD}
-            rowsAndInputs={rowsAndInputs}
-            winOrLose={winOrLose}
-            setWinOrLose={setWinOrLose}
-            audioRef={{ win: winRef, wrong: wrongRef, lose: loseRef }} />
-          {
-            winOrLose.wrong &&
-            <audio ref={wrongRef}>
-              <source src={WRONG} type="audio/mpeg" />
-            </audio>
-          }
-          {
-            winOrLose.win &&
-            <audio ref={winRef}>
-              <source src={WIN} type="audio/mpeg" />
-            </audio>
-          }
-          {
-            winOrLose.lose &&
-            <audio ref={loseRef}>
-              <source src={LOSE} type="audio/mpeg" />
-            </audio>
-          }
+    <div className="flex justify-center items-center w-full h-screen bg-gradient-to-t from-green-200">
+      <div className="flex flex-col justify-between items-center h-screen gap-5 p-3">
+        <h1 className="inline-block bg-gradient-to-b from-green-500 to-green-400 bg-clip-text text-transparent text-6xl font-bold mt-3">BISAYADLE</h1>
+        <div>
+          <p className="text-blue-500 text-lg mb-5 text-center"><span className="font-bold underline">Clue:</span> naay letter <b className="text-black capitalize">{`${clue}`}</b> sa pulong</p>
+            <RowInput 
+              mainWord={MAIN_WORD}
+              rowsAndInputs={rowsAndInputs}
+              winOrLose={winOrLose}
+              setWinOrLose={setWinOrLose}
+              audioRef={{ win: winRef, wrong: wrongRef, lose: loseRef }} />
+            {
+              winOrLose.wrong &&
+              <audio ref={wrongRef}>
+                <source src={WRONG} type="audio/mpeg" />
+              </audio>
+            }
+            {
+              winOrLose.win &&
+              <audio ref={winRef}>
+                <source src={WIN} type="audio/mpeg" />
+              </audio>
+            }
+            {
+              winOrLose.lose &&
+              <audio ref={loseRef}>
+                <source src={LOSE} type="audio/mpeg" />
+              </audio>
+            }
+        </div>
         <div className="flex flex-col items-center">
           <button 
             onClick={() => setHowToPlay(true)}
             type="button"
             title="E-click ko para unsaon pagduwa" 
             className="text-sm text-blue-500 underline mb-2">
-              Unsaon pagduwa
+              Unsaon pagduwa?
           </button>
           <Creator />
         </div>

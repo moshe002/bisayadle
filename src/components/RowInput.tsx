@@ -32,6 +32,7 @@ function RowInput({
   );
 
   const checkButtonRef = useRef<HTMLButtonElement | null>(null);
+  const inputRefs = useRef<(HTMLInputElement | null)[]>([]);
 
   useEffect(() => {
     checkEmptyFields();
@@ -52,7 +53,13 @@ function RowInput({
       setWinOrLose({ win: false, lose: true, wrong: false });
       if(checkButtonRef.current) { checkButtonRef.current.disabled = true; }
     }
-  }, [nextIndex])
+  }, [nextIndex]);
+
+  useEffect(() => {
+    const firstInputIndex = rowsAndInputs[nextIndex]?.[0];
+
+    inputRefs.current[firstInputIndex]?.focus();
+  }, [nextIndex]);
 
   const handleSubmit = () => {
     const wordToCheck = inputtedWord.join(''); 
@@ -80,13 +87,16 @@ function RowInput({
         return '';
       }
     } catch(error) {
-      console.error('ERROR AHAHAHAHA: ', error);
+      console.error('An error has occurred: ', error);
     }
   };
 
-  const handleNextInput = (event: any) => { // (NEVER USE ANY AS ITS TYPE) as of now it is any because it throws errors, too lazy to fix it :(
-    if (event.target.value.length === event.target.maxLength) {
-      const nextInput = event.target.nextElementSibling;
+  const handleNextInput = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    const input = event.currentTarget
+
+    if (input.value.length === input.maxLength) {
+      const nextInput = input.nextElementSibling as HTMLInputElement;
+
       if (nextInput) {
         nextInput.focus();
       }
@@ -126,6 +136,29 @@ function RowInput({
     });
   };
 
+  const handleBackspace = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    const input = event.currentTarget;
+
+    if (input.value === '') {
+      const previousInput = input.previousElementSibling as HTMLInputElement;
+
+      if (previousInput) {
+        previousInput.focus();
+      }
+    }
+  };
+
+  // handles Enter and Backspace inputs
+  const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    if (event.key === 'Enter') {
+      handleSubmit();
+    }
+
+    if (event.key === 'Backspace') {
+      handleBackspace(event);
+    }
+  };
+
   return (
     <div className='flex flex-col items-center'>
       {
@@ -138,6 +171,9 @@ function RowInput({
                 row.map((inputIndex, index) => {
                   return(
                     <input
+                      ref={el => {
+                        inputRefs.current[inputIndex] = el;
+                      }}
                       className={`${inputBgColor[rowIndex][index]} ${handleDisabledInput(rowIndex) ? 'opacity-40' : ''} 
                       ${handleDisabledInput(inputIndex) ? 'border-gray-300' : 'border-gray-400'} 
                       text-2xl text-center w-10 border-2 border-gray-400 duration-150 rounded-md 
@@ -146,8 +182,9 @@ function RowInput({
                       onChange={e => handleInputChange(e, inputIndex)}
                       disabled={handleDisabledInput(rowIndex)}
                       onKeyUp={handleNextInput}
+                      onKeyDown={handleKeyDown}
                       key={inputIndex}
-                      title={'input: ' + inputIndex}
+                      title={`input: ${inputIndex}`}
                       type="text"
                       required 
                     />
