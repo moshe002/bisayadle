@@ -45,6 +45,25 @@ function App() {
     }
   }, []);
 
+  useEffect(() => {
+    const { wrong, win, lose } = winOrLose;
+
+    let audio: HTMLAudioElement | null = null;
+
+    if (wrong) {
+      audio = wrongRef.current;
+    } else if (win) {
+      audio = winRef.current;
+    } else if (lose) {
+      audio = loseRef.current;
+    }
+
+    if (audio) {
+      audio.currentTime = 0;
+      audio.play();
+    }
+  }, [winOrLose]);
+
   return (
     <div className="flex justify-center items-center w-full h-screen bg-gradient-to-t from-green-200">
       <div className="flex flex-col justify-between items-center h-screen gap-5 p-3">
@@ -56,25 +75,11 @@ function App() {
               rowsAndInputs={rowsAndInputs}
               winOrLose={winOrLose}
               setWinOrLose={setWinOrLose}
-              audioRef={{ win: winRef, wrong: wrongRef, lose: loseRef }} />
-            {
-              winOrLose.wrong &&
-              <audio ref={wrongRef}>
-                <source src={WRONG} type="audio/mpeg" />
-              </audio>
-            }
-            {
-              winOrLose.win &&
-              <audio ref={winRef}>
-                <source src={WIN} type="audio/mpeg" />
-              </audio>
-            }
-            {
-              winOrLose.lose &&
-              <audio ref={loseRef}>
-                <source src={LOSE} type="audio/mpeg" />
-              </audio>
-            }
+              audioRef={{ win: winRef, wrong: wrongRef, lose: loseRef }} 
+            />
+            <audio ref={wrongRef} src={WRONG} preload="auto" />
+            <audio ref={winRef} src={WIN} preload="auto" />
+            <audio ref={loseRef} src={LOSE} preload="auto" />
         </div>
         <div className="flex flex-col items-center">
           <button 
