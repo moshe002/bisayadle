@@ -91,19 +91,13 @@ function RowInput({
     }
   };
 
-  const handleNextInput = (event: React.KeyboardEvent<HTMLInputElement>) => {
-    const input = event.currentTarget
-
-    if (input.value.length === input.maxLength) {
-      const nextInput = input.nextElementSibling as HTMLInputElement;
-
-      if (nextInput) {
-        nextInput.focus();
-      }
+  const handleDisabledInput = (index: number) => {
+    if (winOrLose.win) {
+      return true;
     }
-  };
 
-  const handleDisabledInput = (index:number) => index !== nextIndex;
+    return index !== nextIndex;
+  }
 
   const bgColorOfInput = () => {    
     const input: string[] = inputtedWord.join('').split('');
@@ -129,11 +123,20 @@ function RowInput({
   };
 
   const handleInputChange = (e:React.ChangeEvent<HTMLInputElement>, inputIndex:number) => {
+    const value = e.target.value;
+    
     setInputtedWord(prevWord => {
       const updatedWord = [...prevWord];
-      updatedWord[inputIndex] = e.target.value;
+      updatedWord[inputIndex] = value;
       return updatedWord;
     });
+
+    if (value.length === 1) {
+    const nextInput =
+      e.currentTarget.nextElementSibling as HTMLInputElement | null;
+
+    nextInput?.focus();
+  }
   };
 
   const handleBackspace = (event: React.KeyboardEvent<HTMLInputElement>) => {
@@ -176,12 +179,11 @@ function RowInput({
                       }}
                       className={`${inputBgColor[rowIndex][index]} ${handleDisabledInput(rowIndex) ? 'opacity-40' : ''} 
                       ${handleDisabledInput(inputIndex) ? 'border-gray-300' : 'border-gray-400'} 
-                      text-2xl text-center w-10 border-2 border-gray-400 duration-150 rounded-md 
-                      focus:border-green-400 outline-none capitalize`}
+                      text-3xl text-center w-11 border-2 border-gray-400 duration-150 rounded-md 
+                      focus:border-green-500 outline-none capitalize`}
                       maxLength={1}
                       onChange={e => handleInputChange(e, inputIndex)}
                       disabled={handleDisabledInput(rowIndex)}
-                      onKeyUp={handleNextInput}
                       onKeyDown={handleKeyDown}
                       key={inputIndex}
                       title={`input: ${inputIndex}`}
@@ -202,7 +204,7 @@ function RowInput({
           <>
             <p className="text-lg text-red-500 font-semibold">PILDI KA!</p>
             <p className="text-lg text-blue-500 mb-3">Ang sakto nga pulong kay:
-              <span className='text-lg text-black font-bold'>{' ' + mainWord.toUpperCase()}</span>
+              <span className='bg-gradient-to-b from-green-500 to-green-400 bg-clip-text text-transparent text-lg text-black font-bold'>{' ' + mainWord.toUpperCase()}</span>
             </p>
           </> 
         )
@@ -214,9 +216,9 @@ function RowInput({
         winOrLose.win || winOrLose.lose ?
         <PlayAgain />
         :
-        <CheckButton 
-          handleSubmit={handleSubmit} 
-          checkButtonRef={checkButtonRef} 
+        <CheckButton
+          handleSubmit={handleSubmit}
+          checkButtonRef={checkButtonRef}
         />
       }
     </div>
